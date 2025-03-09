@@ -2,14 +2,21 @@ package dev.pronunciationAppBack.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
 
 import java.util.List;
+import java.util.Locale.Category;
 
 @Entity
 public class Word {
 
+    @Entity
+public class Word {
     @Id
     private String id;
     private String wordName;
@@ -21,6 +28,22 @@ public class Word {
 
     @OneToMany(mappedBy = "word")
     private List<Pronunciation> pronunciations;
+
+    @ManyToOne
+    @JoinColumn(name = "level_id")
+    private Level level;
+
+    @ManyToMany
+    @JoinTable(
+        name = "word_category",
+        joinColumns = @JoinColumn(name = "word_id"),
+        inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
+    private List<Category> categories;
+
+    @OneToMany(mappedBy = "word")
+    private List<StageWord> stageWords;
+
 
     public Word() {}
 
@@ -110,4 +133,5 @@ public class Word {
                 ", level=" + level +
                 '}';
     }
+}
 }

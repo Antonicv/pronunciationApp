@@ -1,21 +1,13 @@
 package dev.pronunciationAppBack.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -45,5 +37,6 @@ public class GameProgress {
     @JoinColumn(name = "user_id")
     private AppUser appUser;
 
-
+    @OneToMany(mappedBy = "gameProgress")
+    private List<Stage> stages;
 }

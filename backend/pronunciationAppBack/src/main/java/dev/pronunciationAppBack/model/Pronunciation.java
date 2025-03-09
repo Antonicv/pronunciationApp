@@ -1,10 +1,7 @@
 package dev.pronunciationAppBack.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,16 +20,15 @@ public class Pronunciation {
     private String definition;
     private String phoneticSpelling;
     private String speakerGender;
-    public enum type {
+
+    public enum Type {
         RECORDED, SAMPLE
     }
-    private type type;
+
+    private Type type;
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "WORD_ID_FK")
+    @JoinColumn(name = "word_id")
     private Word word;
-
-
-
 }

@@ -47,10 +47,7 @@ public class PronunciationService {
         return pronunciationRepository.count();
     }
 
-    // Additional business logic methods
-    public List<Pronunciation> getPronunciationsByType(Pronunciation.type type) {
-        return pronunciationRepository.findByType(type);
-    }
+ 
 
     public List<Pronunciation> getPronunciationsBySpeakerGender(String gender) {
         return pronunciationRepository.findBySpeakerGender(gender);

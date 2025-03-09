@@ -10,7 +10,12 @@ import lombok.AllArgsConstructor;
 import lombok.ToString;
 
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+
 import java.util.Date;
+
+import dev.pronunciationAppBack.model.GameProgress.Stage;
 
 @Entity
 @Getter
@@ -30,4 +35,11 @@ public class StageWord {
     public enum Status {
         DONE, PENDING, FAIL
     }
+     @ManyToOne
+    @JoinColumn(name = "stage_id")
+    private Stage stage;
+
+    @ManyToOne
+    @JoinColumn(name = "word_id")
+    private Word word;
 }
