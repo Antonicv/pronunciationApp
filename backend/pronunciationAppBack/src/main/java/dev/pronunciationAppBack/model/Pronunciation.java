@@ -21,6 +21,7 @@ public class Pronunciation {
     private String phoneticSpelling;
     private String speakerGender;
 
+    // Enumeració per als tipus de pronunciació
     public enum Type {
         RECORDED, SAMPLE
     }

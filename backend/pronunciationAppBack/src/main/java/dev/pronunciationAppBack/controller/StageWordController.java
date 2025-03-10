@@ -19,6 +19,7 @@ public class StageWordController {
     @Autowired
     private StageWordService stageWordService;
 
+    // Endpoint per obtenir totes les paraules d'etapa
     @GetMapping
     public ResponseEntity<List<StageWord>> getAllStageWords() {
         List<StageWord> stageWords = stageWordService.getAllStageWords();
@@ -29,6 +30,7 @@ public class StageWordController {
                 : new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
     }
 
+    // Endpoint per obtenir una paraula d'etapa per ID
     @GetMapping("/{id}")
     public ResponseEntity<StageWord> getStageWordById(@PathVariable String id) {
         Optional<StageWord> stageWord = stageWordService.getStageWordById(id);
@@ -38,6 +40,7 @@ public class StageWordController {
                 .orElseGet(() -> new ResponseEntity<>(headers, HttpStatus.NOT_FOUND));
     }
 
+    // Endpoint per crear una nova paraula d'etapa
     @PostMapping("/createStageWord")
     public ResponseEntity<StageWord> createStageWord(@RequestBody StageWord stageWord) {
         StageWord createdStageWord = stageWordService.createStageWord(stageWord);
@@ -46,6 +49,7 @@ public class StageWordController {
         return new ResponseEntity<>(createdStageWord, headers, HttpStatus.CREATED);
     }
 
+    // Endpoint per actualitzar una paraula d'etapa existent
     @PutMapping("/{id}")
     public ResponseEntity<StageWord> updateStageWord(@PathVariable String id, @RequestBody StageWord stageWord) {
         StageWord updatedStageWord = stageWordService.updateStageWord(stageWord);
@@ -54,6 +58,7 @@ public class StageWordController {
         return new ResponseEntity<>(updatedStageWord, headers, HttpStatus.OK);
     }
 
+    // Endpoint per eliminar una paraula d'etapa per ID
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteStageWord(@PathVariable("id") String idToDelete) {
         HttpHeaders headers = getCommonHeaders("Delete a stage word");
@@ -66,6 +71,7 @@ public class StageWordController {
         }
     }
 
+    // Endpoint per eliminar totes les paraules d'etapa
     @DeleteMapping
     public ResponseEntity<String> deleteAllStageWords() {
         stageWordService.deleteAllStageWords();
@@ -73,6 +79,7 @@ public class StageWordController {
         return new ResponseEntity<>("All stage words deleted", headers, HttpStatus.OK);
     }
 
+    // Mètode per obtenir capçaleres comunes per a les respostes HTTP
     private HttpHeaders getCommonHeaders(String description) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("desc", description);

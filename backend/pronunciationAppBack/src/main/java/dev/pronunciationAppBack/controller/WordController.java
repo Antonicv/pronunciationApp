@@ -19,6 +19,7 @@ public class WordController {
     @Autowired
     private WordService wordService;
 
+    // Endpoint per obtenir totes les paraules
     @GetMapping
     public ResponseEntity<List<Word>> getAllWords() {
         List<Word> words = wordService.getAllWords();
@@ -29,6 +30,7 @@ public class WordController {
                 : new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
     }
 
+    // Endpoint per obtenir una paraula per ID
     @GetMapping("/{id}")
     public ResponseEntity<Word> getWordById(@PathVariable String id) {
         Optional<Word> word = wordService.getWordById(id);
@@ -38,6 +40,7 @@ public class WordController {
                 .orElseGet(() -> new ResponseEntity<>(headers, HttpStatus.NOT_FOUND));
     }
 
+    // Endpoint per crear una nova paraula
     @PostMapping("/createWord")
     public ResponseEntity<Word> createWord(@RequestBody Word word) {
         Word createdWord = wordService.createWord(word);
@@ -46,6 +49,7 @@ public class WordController {
         return new ResponseEntity<>(createdWord, headers, HttpStatus.CREATED);
     }
 
+    // Endpoint per actualitzar una paraula existent
     @PutMapping("/{id}")
     public ResponseEntity<Word> updateWord(@PathVariable String id, @RequestBody Word word) {
         Word updatedWord = wordService.updateWord(word);
@@ -54,6 +58,7 @@ public class WordController {
         return new ResponseEntity<>(updatedWord, headers, HttpStatus.OK);
     }
 
+    // Endpoint per eliminar una paraula per ID
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteWord(@PathVariable("id") String idToDelete) {
         HttpHeaders headers = getCommonHeaders("Delete a word");
@@ -66,6 +71,7 @@ public class WordController {
         }
     }
 
+    // Endpoint per eliminar totes les paraules
     @DeleteMapping
     public ResponseEntity<String> deleteAllWords() {
         wordService.deleteAllWords();
@@ -73,6 +79,7 @@ public class WordController {
         return new ResponseEntity<>("All words deleted", headers, HttpStatus.OK);
     }
 
+    // Mètode per obtenir capçaleres comunes per a les respostes HTTP
     private HttpHeaders getCommonHeaders(String description) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("desc", description);

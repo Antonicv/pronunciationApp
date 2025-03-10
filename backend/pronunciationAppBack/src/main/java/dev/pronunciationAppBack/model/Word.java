@@ -8,15 +8,11 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
-
 import java.util.List;
-import java.util.Locale.Category;
 
 @Entity
 public class Word {
 
-    @Entity
-public class Word {
     @Id
     private String id;
     private String wordName;
@@ -24,14 +20,14 @@ public class Word {
     private String phoneticSpelling;
     private String sentence;
     private boolean isActive;
-    private int level;
+    private int levelNumber;
 
     @OneToMany(mappedBy = "word")
     private List<Pronunciation> pronunciations;
 
     @ManyToOne
     @JoinColumn(name = "level_id")
-    private Level level;
+    private Level wordLevel;
 
     @ManyToMany
     @JoinTable(
@@ -44,19 +40,21 @@ public class Word {
     @OneToMany(mappedBy = "word")
     private List<StageWord> stageWords;
 
-
+    // Constructor per defecte
     public Word() {}
 
-    public Word(String id, String wordName, String definition, String phoneticSpelling, String sentence, boolean isActive, int level) {
+    // Constructor amb paràmetres
+    public Word(String id, String wordName, String definition, String phoneticSpelling, String sentence, boolean isActive, int levelNumber) {
         this.id = id;
         this.wordName = wordName;
         this.definition = definition;
         this.phoneticSpelling = phoneticSpelling;
         this.sentence = sentence;
         this.isActive = isActive;
-        this.level = level;
+        this.levelNumber = levelNumber;
     }
 
+    // Getters i setters
     public List<Pronunciation> getPronunciations() {
         return pronunciations;
     }
@@ -69,56 +67,64 @@ public class Word {
         return id;
     }
 
-    public String getWordName() {
-        return wordName;
-    }
-
-    public String getDefinition() {
-        return definition;
-    }
-
-    public String getPhoneticSpelling() {
-        return phoneticSpelling;
-    }
-
-    public String getSentence() {
-        return sentence;
-    }
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public int getLevel() {
-        return level;
-    }
-
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getWordName() {
+        return wordName;
     }
 
     public void setWordName(String wordName) {
         this.wordName = wordName;
     }
 
+    public String getDefinition() {
+        return definition;
+    }
+
     public void setDefinition(String definition) {
         this.definition = definition;
+    }
+
+    public String getPhoneticSpelling() {
+        return phoneticSpelling;
     }
 
     public void setPhoneticSpelling(String phoneticSpelling) {
         this.phoneticSpelling = phoneticSpelling;
     }
 
+    public String getSentence() {
+        return sentence;
+    }
+
     public void setSentence(String sentence) {
         this.sentence = sentence;
+    }
+
+    public boolean isActive() {
+        return isActive;
     }
 
     public void setActive(boolean active) {
         isActive = active;
     }
 
-    public void setLevel(int level) {
-        this.level = level;
+    public int getLevelNumber() {
+        return levelNumber;
+    }
+
+    public void setLevelNumber(int levelNumber) {
+        this.levelNumber = levelNumber;
+    }
+
+    public Level getWordLevel() {
+        return wordLevel;
+    }
+
+    public void setWordLevel(Level wordLevel) {
+        this.wordLevel = wordLevel;
     }
 
     @Override
@@ -130,8 +136,7 @@ public class Word {
                 ", phoneticSpelling='" + phoneticSpelling + '\'' +
                 ", sentence='" + sentence + '\'' +
                 ", isActive=" + isActive +
-                ", level=" + level +
+                ", levelNumber=" + levelNumber +
                 '}';
     }
-}
 }

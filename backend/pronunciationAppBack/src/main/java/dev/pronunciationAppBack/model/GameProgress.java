@@ -21,6 +21,7 @@ public class GameProgress {
 
     private int currentScore;
 
+    // Enumeració per a les etapes del joc
     public enum Stage {
         STAGE_01, STAGE_02, STAGE_03, STAGE_04, STAGE_05
     }

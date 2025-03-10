@@ -32,10 +32,12 @@ public class StageWord {
     private int listenedQty;
     private Date lastUpdatedDateTime;
 
+    // Enumeració per als estats de la paraula d'etapa
     public enum Status {
         DONE, PENDING, FAIL
     }
-     @ManyToOne
+
+    @ManyToOne
     @JoinColumn(name = "stage_id")
     private Stage stage;
 

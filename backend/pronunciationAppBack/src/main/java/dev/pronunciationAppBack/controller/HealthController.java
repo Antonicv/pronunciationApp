@@ -1,6 +1,5 @@
 package dev.pronunciationAppBack.controller;
 
-
 import dev.pronunciationAppBack.service.WordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -21,6 +20,7 @@ public class HealthController {
     @Autowired
     private WordService wordService;
 
+    // Endpoint per comprovar l'estat de salut de l'aplicació
     @GetMapping
     public ResponseEntity<Map<String, Object>> healthCheck() {
         Map<String, Object> healthStatus = new HashMap<>();
@@ -28,15 +28,15 @@ public class HealthController {
         healthStatus.put("timestamp", new Date());
         healthStatus.put("wordCount", wordService.getWordCount());
 
-        // verify database connection
+        // Verificar connexió a la base de dades
         boolean databaseConnection = checkDatabaseConnection();
         healthStatus.put("database", databaseConnection ? "Connected" : "Disconnected");
 
-        // Add more health checks as needed
+        // Afegir més comprovacions de salut segons sigui necessari
         healthStatus.put("memoryUsage", getMemoryUsage());
         healthStatus.put("diskSpace", getDiskSpace());
 
-        // Add PID, Java version, and other process info
+        // Afegir PID, versió de Java i altra informació del procés
         healthStatus.put("pid", ProcessHandle.current().pid());
         healthStatus.put("javaVersion", System.getProperty("java.version"));
         healthStatus.put("javaVendor", System.getProperty("java.vendor"));
@@ -49,6 +49,7 @@ public class HealthController {
         return new ResponseEntity<>(healthStatus, headers, status);
     }
 
+    // Mètode per comprovar la connexió a la base de dades
     private boolean checkDatabaseConnection() {
         try {
             wordService.getAllWords();
@@ -58,6 +59,7 @@ public class HealthController {
         }
     }
 
+    // Mètode per obtenir l'ús de memòria
     private Map<String, Long> getMemoryUsage() {
         Runtime runtime = Runtime.getRuntime();
         Map<String, Long> memoryInfo = new HashMap<>();
@@ -67,6 +69,7 @@ public class HealthController {
         return memoryInfo;
     }
 
+    // Mètode per obtenir l'espai de disc
     private Map<String, Long> getDiskSpace() {
         java.io.File root = new java.io.File("/");
         Map<String, Long> diskInfo = new HashMap<>();
@@ -76,6 +79,7 @@ public class HealthController {
         return diskInfo;
     }
 
+    // Mètode per obtenir capçaleres comunes per a les respostes HTTP
     private HttpHeaders getCommonHeaders(String description) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("desc", description);
